@@ -1,7 +1,4 @@
-package mainPackage;
-
-import mainPackage.Model.Generable;
-import mainPackage.Model.Generator;
+package mainPackage.Model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,6 +1,6 @@
 package mainPackage.View.tabs;
 
-import mainPackage.AppendGeneratorEvent;
+import mainPackage.Model.AppendGeneratorEvent;
 import mainPackage.Model.Generators.CityGenerator;
 import mainPackage.Model.Generators.StreetAndNumberGenerator;
 import mainPackage.Model.Generators.StreetGenerator;

@@ -1,6 +1,6 @@
 package mainPackage.View.tabs;
 
-import mainPackage.AppendGeneratorEvent;
+import mainPackage.Model.AppendGeneratorEvent;
 import mainPackage.Model.FileLoader;
 import mainPackage.Model.Generators.CustomGenerator;
 import mainPackage.View.CustomsManager;
