@@ -15,4 +15,25 @@ public class OrdinalNumberGenerator implements Generable<Integer>
     public Integer getLastGenerated() {
         return ordinalNumber;
     }
+
+    @Override
+    public String getGeneratorLabel() {
+        return "Liczba Porządkowa";
+    }
+
+    @Override
+    public boolean isDependenceSet() {
+        return true;
+    }
+
+    @Override
+    public void setDependencies() {}
+
+    @Override
+    public String toString() {return getGeneratorLabel();}
+
+    public void set(int start)
+    {
+        ordinalNumber = start;
+    }
 }

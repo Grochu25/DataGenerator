@@ -1,10 +1,9 @@
 package mainPackage.Model.Generators;
 
-import mainPackage.Generator;
+import mainPackage.Model.Generator;
 import mainPackage.Model.Generable;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 public class DateGenerator implements Generable<String>
@@ -38,4 +37,20 @@ public class DateGenerator implements Generable<String>
     public String getLastGenerated() {
         return lastGenerated.format(Generator.getInstance().getDateTimeFormatter());
     }
+
+    @Override
+    public String getGeneratorLabel() {
+        return "Data "+fromDate+" -> "+toDate;
+    }
+
+    @Override
+    public void setDependencies() {}
+
+    @Override
+    public boolean isDependenceSet() {
+        return fromDate != null && toDate != null;
+    }
+
+    @Override
+    public String toString() {return getGeneratorLabel();}
 }

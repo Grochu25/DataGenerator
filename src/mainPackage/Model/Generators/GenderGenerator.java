@@ -1,7 +1,11 @@
 package mainPackage.Model.Generators;
 
-import mainPackage.Generator;
+import mainPackage.Model.Generator;
+import mainPackage.Main;
 import mainPackage.Model.Generable;
+import mainPackage.View.SelectionTableDialog;
+
+import java.util.List;
 
 public class GenderGenerator implements Generable<String>
 {
@@ -13,7 +17,10 @@ public class GenderGenerator implements Generable<String>
         this.nameGenerator = nameReference;
     }
 
-    public GenderGenerator() {}
+    public GenderGenerator()
+    {
+        setDependencies();
+    }
 
     @Override
     public String generate() {
@@ -25,11 +32,6 @@ public class GenderGenerator implements Generable<String>
         return lastGenerated;
     }
 
-    @Override
-    public String getLastGenerated() {
-        return lastGenerated;
-    }
-
     private String genderFromName()
     {
         String name = nameGenerator.getLastGenerated();
@@ -38,4 +40,36 @@ public class GenderGenerator implements Generable<String>
         else
             return "Mężczyzna";
     }
+
+    @Override
+    public String getLastGenerated() {
+        return lastGenerated;
+    }
+
+    @Override
+    public String getGeneratorLabel() {
+        return "Płeć";
+    }
+
+    @Override
+    public void setDependencies() {
+        List<Generable<?>> generables = Generator.getInstance().getGenerablesList();
+        SelectionTableDialog<Generable<?>> tableDialog = new SelectionTableDialog<>(Main.frame, generables);
+
+        Generable<?> choosed = tableDialog.showDialogAndGetField("Wybierz pole Imię do połączenia",
+                        "Wybierz pole Imię do połączenia lub zamknij to okienko dla losowych danych");
+
+        this.nameGenerator = (choosed instanceof NameGenerator) ? (NameGenerator) choosed : null;
+    }
+
+    @Override
+    public boolean isDependenceSet() {
+        if (!Generator.getInstance().getGenerablesList().contains(nameGenerator))
+            nameGenerator = null;
+
+        return nameGenerator != null;
+    }
+
+    @Override
+    public String toString() {return getGeneratorLabel();}
 }

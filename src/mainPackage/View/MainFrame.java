@@ -1,6 +1,10 @@
 package mainPackage.View;
 
-import mainPackage.Generator;
+import mainPackage.Model.Generator;
+import mainPackage.View.MainElements.ChoosedInfoPanel;
+import mainPackage.View.MainElements.ComponentTabbedPane;
+import mainPackage.View.MainElements.MenuBar;
+import mainPackage.View.MainElements.NumberAndApplayPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,15 +19,15 @@ public class MainFrame extends JFrame
         computeSize();
         setTitle("Generator danych");
 
-        JButton generateButton = new JButton("Generuj");
-        generateButton.addActionListener(e-> Generator.getInstance().Generate());
-
-        ChoosedInfoPane cip = new ChoosedInfoPane();
+        ChoosedInfoPanel cip = new ChoosedInfoPanel();
+        NumberAndApplayPane naap = new NumberAndApplayPane();
         Generator.getInstance().addActionListener(cip);
+        Generator.getInstance().addSaveModeListener(naap);
 
         add(new ComponentTabbedPane(), BorderLayout.NORTH);
         add(cip, BorderLayout.CENTER);
-        add(generateButton, BorderLayout.SOUTH);
+        add(naap, BorderLayout.SOUTH);
+        setJMenuBar(new MenuBar());
     }
 
     private void computeSize()

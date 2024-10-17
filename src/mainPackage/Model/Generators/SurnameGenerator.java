@@ -1,6 +1,6 @@
 package mainPackage.Model.Generators;
 
-import mainPackage.Generator;
+import mainPackage.Model.Generator;
 import mainPackage.Model.FileLoader;
 import mainPackage.Model.Generable;
 
@@ -29,4 +29,20 @@ public class SurnameGenerator implements Generable<String>
     public String getLastGenerated() {
         return lastGenerated;
     }
+
+    @Override
+    public String getGeneratorLabel() {
+        return "Nazwisko";
+    }
+
+    @Override
+    public void setDependencies() {}
+
+    @Override
+    public boolean isDependenceSet() {
+        return true;
+    }
+
+    @Override
+    public String toString() {return getGeneratorLabel();}
 }

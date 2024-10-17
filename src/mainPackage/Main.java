@@ -7,16 +7,15 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Main {
+    public static JFrame frame;
+
     public static void main(String[] args)
     {
-        DateGenerator dg = new DateGenerator();
-
-        System.out.println(dg.generate());
-
         EventQueue.invokeLater(()->
         {
-            JFrame frame = new MainFrame();
+            frame = new MainFrame();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setResizable(false);
             frame.setVisible(true);
         });
     }

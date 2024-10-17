@@ -6,29 +6,33 @@ import mainPackage.Model.Generable;
 
 import java.util.ArrayList;
 
-public class CityGenerator implements Generable<String>
+public class CustomGenerator implements Generable<String>
 {
-    private static ArrayList<String> cities;
-    private String lastGenerated;
 
-    public CityGenerator()
+    private final ArrayList<String> records;
+    private String lastGenerated;
+    private String name;
+
+    public CustomGenerator(String fullFileName)
     {
-        if(cities == null || cities.isEmpty()){
-            cities = new ArrayList<>();
-            cities.addAll(FileLoader.loadFromFile("sources/miasta.txt"));
-        }
+        name = fullFileName;
+        records = new ArrayList<>();
+        records.addAll(FileLoader.loadFromFile("sources/customs/"+fullFileName));
     }
 
     @Override
     public String generate() {
-        lastGenerated = cities.get(Generator.getInstance().getRandom().nextInt(cities.size()));
+        lastGenerated = records.get(Generator.getInstance().getRandom().nextInt(records.size()));
         return lastGenerated;
     }
 
     @Override
     public String getGeneratorLabel() {
-        return "Miasto";
+        return name;
     }
+
+    @Override
+    public String getLastGenerated() {return lastGenerated;}
 
     @Override
     public void setDependencies() {}
@@ -39,8 +43,6 @@ public class CityGenerator implements Generable<String>
     }
 
     @Override
-    public String getLastGenerated() {return lastGenerated;}
-
-    @Override
     public String toString() {return getGeneratorLabel();}
+
 }

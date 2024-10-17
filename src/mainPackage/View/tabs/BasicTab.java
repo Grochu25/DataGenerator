@@ -1,7 +1,7 @@
 package mainPackage.View.tabs;
 
 import mainPackage.AppendGeneratorEvent;
-import mainPackage.Generator;
+import mainPackage.Model.Generator;
 import mainPackage.Model.Generators.OrdinalNumberGenerator;
 import mainPackage.Model.Generators.RandomNumberGenerator;
 
@@ -9,20 +9,17 @@ import javax.swing.*;
 
 public class BasicTab extends JPanel
 {
-    private final JButton ordinalNumberButton;
-    private final JButton randomNumberButton;
     private JSpinner rangeStart;
     private JSpinner rangeEnd;
 
     public BasicTab()
     {
-        ordinalNumberButton = new JButton("Liczba porządkowa");
+        JButton ordinalNumberButton = new JButton("Liczba porządkowa");
         ordinalNumberButton.addActionListener(new AppendGeneratorEvent<Integer>(new OrdinalNumberGenerator()));
 
         JPanel rangePanel = createRangePanel();
 
-        randomNumberButton = new JButton("Liczba losowa");
-        //TODO: tutaj można dodać eventHandler
+        JButton randomNumberButton = new JButton("Liczba losowa");
         randomNumberButton.addActionListener(
                 e-> Generator.getInstance().addToGenerables(new RandomNumberGenerator((Integer) rangeStart.getValue(), (Integer) rangeEnd.getValue())));
 

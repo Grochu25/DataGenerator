@@ -1,8 +1,9 @@
 package mainPackage.Model.Generators;
 
-import mainPackage.Generator;
+import mainPackage.Model.Generator;
 import mainPackage.Model.FileLoader;
 import mainPackage.Model.Generable;
+
 
 import java.util.ArrayList;
 
@@ -25,5 +26,22 @@ public class NameGenerator implements Generable<String>
         return lastGenerated;
     }
 
+    @Override
+    public String getGeneratorLabel() {
+        return "Imię";
+    }
+
+    @Override
     public String getLastGenerated() {return lastGenerated;}
+
+    @Override
+    public void setDependencies() {}
+
+    @Override
+    public boolean isDependenceSet() {
+        return true;
+    }
+
+    @Override
+    public String toString() {return getGeneratorLabel();}
 }

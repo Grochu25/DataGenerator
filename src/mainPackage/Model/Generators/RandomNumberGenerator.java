@@ -1,6 +1,6 @@
 package mainPackage.Model.Generators;
 
-import mainPackage.Generator;
+import mainPackage.Model.Generator;
 import mainPackage.Model.Generable;
 
 public class RandomNumberGenerator implements Generable<Integer>
@@ -11,8 +11,14 @@ public class RandomNumberGenerator implements Generable<Integer>
 
     public RandomNumberGenerator(Integer from, Integer to)
     {
-        this.from = from;
-        this.to = to;
+        if(from.compareTo(to) <= 0) {
+            this.from = from;
+            this.to = to;
+        }
+        else{
+            this.from = to;
+            this.to = from;
+        }
     }
 
     public RandomNumberGenerator(){}
@@ -27,4 +33,20 @@ public class RandomNumberGenerator implements Generable<Integer>
     public Integer getLastGenerated() {
         return lastGenerated;
     }
+
+    @Override
+    public String getGeneratorLabel() {
+        return String.format("Liczba losowa (%d-%d)", from, to);
+    }
+
+    @Override
+    public void setDependencies() {}
+
+    @Override
+    public boolean isDependenceSet() {
+        return true;
+    }
+
+    @Override
+    public String toString() {return getGeneratorLabel();}
 }
