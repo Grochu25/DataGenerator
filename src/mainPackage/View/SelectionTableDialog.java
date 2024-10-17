@@ -21,9 +21,7 @@ public class SelectionTableDialog<T> extends JPanel
         infoTextArea = createInfoTextArea();
 
         JButton apply = new JButton("Zatwierdź");
-        apply.addActionListener(e-> {
-            dialog.setVisible(false);
-        });
+        apply.addActionListener(e-> dialog.setVisible(false));
 
         dialog.add(infoTextArea, BorderLayout.NORTH);
         dialog.add(new JScrollPane(fieldTable), BorderLayout.CENTER);

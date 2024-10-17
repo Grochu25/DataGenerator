@@ -41,7 +41,7 @@ public class CustomsTab extends JPanel
     private void createButtonWithCustom(String fullFileName)
     {
         JButton customCreated = new JButton(fullFileName.substring(0,fullFileName.length()-4));
-        customCreated.addActionListener(new AppendGeneratorEvent<String>(new CustomGenerator(fullFileName)));
+        customCreated.addActionListener(new AppendGeneratorEvent<>(new CustomGenerator(fullFileName)));
         customFieldRow.add(customCreated);
     }
 

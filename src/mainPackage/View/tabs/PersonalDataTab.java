@@ -17,10 +17,10 @@ public class PersonalDataTab extends JPanel
         JButton emailButton = new JButton("Adres e-mail");
         JButton peselButton = new JButton("PESEL");
 
-        nameButton.addActionListener(new AppendGeneratorEvent<String>(new NameGenerator()));
-        surnameButton.addActionListener(new AppendGeneratorEvent<String>(new SurnameGenerator()));
+        nameButton.addActionListener(new AppendGeneratorEvent<>(new NameGenerator()));
+        surnameButton.addActionListener(new AppendGeneratorEvent<>(new SurnameGenerator()));
         genderButton.addActionListener(e-> Generator.getInstance().addToGenerables(new GenderGenerator()));
-        phoneNumberButton.addActionListener(new AppendGeneratorEvent<Integer>(new PhoneNumberGenerator()));
+        phoneNumberButton.addActionListener(new AppendGeneratorEvent<>(new PhoneNumberGenerator()));
         emailButton.addActionListener(e-> Generator.getInstance().addToGenerables(new EmailGenerator()));
         peselButton.addActionListener(e-> Generator.getInstance().addToGenerables(new PeselGenerator()));
 

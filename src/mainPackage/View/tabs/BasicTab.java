@@ -15,7 +15,7 @@ public class BasicTab extends JPanel
     public BasicTab()
     {
         JButton ordinalNumberButton = new JButton("Liczba porządkowa");
-        ordinalNumberButton.addActionListener(new AppendGeneratorEvent<Integer>(new OrdinalNumberGenerator()));
+        ordinalNumberButton.addActionListener(new AppendGeneratorEvent<>(new OrdinalNumberGenerator()));
 
         JPanel rangePanel = createRangePanel();
 

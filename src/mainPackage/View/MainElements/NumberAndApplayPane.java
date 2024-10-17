@@ -63,9 +63,8 @@ public class NumberAndApplayPane extends JPanel implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() instanceof Generator.SaveMode)
+        if(e.getSource() instanceof Generator.SaveMode mode)
         {
-            Generator.SaveMode mode = (Generator.SaveMode) e.getSource();
             dataSeparatorComboBox.setSelectedItem(Generator.getInstance().getSeparator());
             bracketsCheckbox.setSelected(Generator.getInstance().getBrackets());
             quotationMarksCheckbox.setSelected(Generator.getInstance().getQuotation());

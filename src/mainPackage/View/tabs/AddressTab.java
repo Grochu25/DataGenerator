@@ -15,9 +15,9 @@ public class AddressTab extends JPanel
         JButton streetAndNumberButton = new JButton("Ulica i numer lokalu");
         JButton cityButton = new JButton("Miasto");
 
-        streetButton.addActionListener(new AppendGeneratorEvent<String>(new StreetGenerator()));
-        streetAndNumberButton.addActionListener(new AppendGeneratorEvent<String>(new StreetAndNumberGenerator()));
-        cityButton.addActionListener(new AppendGeneratorEvent<String>(new CityGenerator()));
+        streetButton.addActionListener(new AppendGeneratorEvent<>(new StreetGenerator()));
+        streetAndNumberButton.addActionListener(new AppendGeneratorEvent<>(new StreetAndNumberGenerator()));
+        cityButton.addActionListener(new AppendGeneratorEvent<>(new CityGenerator()));
 
         add(streetButton);
         add(streetAndNumberButton);

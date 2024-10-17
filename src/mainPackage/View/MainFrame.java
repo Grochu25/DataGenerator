@@ -11,9 +11,6 @@ import java.awt.*;
 
 public class MainFrame extends JFrame
 {
-    private int windowHeight;
-    private int windowWidth;
-
     public MainFrame()
     {
         computeSize();
@@ -34,8 +31,8 @@ public class MainFrame extends JFrame
     {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
-        windowHeight = screenSize.height/2;
-        windowWidth = screenSize.width/2;
+        int windowHeight = screenSize.height / 2;
+        int windowWidth = screenSize.width / 2;
         setSize(windowWidth, windowHeight);
     }
 }
