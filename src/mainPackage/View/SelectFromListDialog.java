@@ -1,7 +1,6 @@
 package mainPackage.View;
 
 import mainPackage.Main;
-import mainPackage.Model.Generable;
 
 import javax.swing.*;
 import java.awt.*;

@@ -28,7 +28,7 @@ public class PeselGenerator implements Generable<String>
 
     public PeselGenerator(){
         setDependencies();
-    };
+    }
 
     @Override
     public String generate() {
@@ -72,7 +72,7 @@ public class PeselGenerator implements Generable<String>
 
     @Override
     public String getLastGenerated() {
-        return String.format("%011.0f",lastGenerated);
+        return String.format("%011d",lastGenerated);
     }
 
     @Override
