@@ -1,6 +1,7 @@
 package mainPackage.DB;
 
 import mainPackage.Main;
+import mainPackage.Model.ErrorCatcher;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,9 +36,8 @@ public class DBConfigDialog extends JPanel
         initializeFields();
 
         JPanel inputs = setupInputPanel();
-        add(inputs, BorderLayout.CENTER);
-
         JPanel buttons = setupButtonPanel();
+        add(inputs, BorderLayout.CENTER);
         add(buttons, BorderLayout.SOUTH);
 
         dialog = new JDialog(Main.frame, true);
@@ -77,23 +77,27 @@ public class DBConfigDialog extends JPanel
     private JPanel setupButtonPanel()
     {
         JPanel buttons = new JPanel();
-        buttons.setLayout(new FlowLayout());
         accept = new JButton("Zatwierdz");
         accept.addActionListener(event->{saveChanges(); dialog.setVisible(false);});
         cancel = new JButton("Anuluj");
-        cancel.addActionListener(event->{dialog.setVisible(false);});
+        cancel.addActionListener(event->dialog.setVisible(false));
         buttons.add(accept);
         buttons.add(cancel);
         return buttons;
     }
 
+    public void showDialog()
+    {
+        fillFields();
+        dialog.setVisible(true);
+    }
+
     private void fillFields()
     {
         props = new Properties();
-        try(InputStream in = Files.newInputStream(Paths.get("db.properties")))
-        {
+        try(InputStream in = Files.newInputStream(Paths.get("db.properties"))) {
             props.load(in);
-        }catch(IOException e){e.printStackTrace();}
+        }catch(IOException e){ErrorCatcher.call("Błąd wczytywania danych połączenia z bazą");}
 
         address.setText(props.getProperty("jdbc.address", "localhost"));
         port.setText(props.getProperty("jdbc.port", "3306"));
@@ -113,12 +117,6 @@ public class DBConfigDialog extends JPanel
 
         try {
             props.store(Files.newOutputStream(Paths.get("db.properties")),"Database configuration");
-        }catch(IOException e) {e.printStackTrace();}
-    }
-
-    public void showDialog()
-    {
-        fillFields();
-        dialog.setVisible(true);
+        }catch(IOException e) {ErrorCatcher.call("Błąd zapisu danych połączenia z bazą");}
     }
 }

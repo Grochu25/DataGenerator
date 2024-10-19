@@ -50,7 +50,8 @@ public class Generator
 
     public void Generate(int number)
     {
-        setOrdinalNumbers();
+        if(resetOrdinalNumbers() < 0)
+            return;
 
         ArrayDeque<GenerationOrderPair> generableQueue = orderGenerables();
         String[] line = new String[generables.size()];
@@ -75,7 +76,7 @@ public class Generator
             generateToFile(sBuilder.toString());
     }
 
-    private void setOrdinalNumbers()
+    private int resetOrdinalNumbers()
     {
         int number = 0;
         if(saveMode == SaveMode.DataBase)
@@ -84,6 +85,8 @@ public class Generator
         for(Generable<?> generabe : generables)
             if(generabe instanceof OrdinalNumberGenerator)
                 ((OrdinalNumberGenerator) generabe).set(number);
+
+        return number;
     }
 
     private ArrayDeque<GenerationOrderPair> orderGenerables()
@@ -122,7 +125,7 @@ public class Generator
         }
         catch (SQLException e) { ErrorCatcher.call("Błąd SQL: "+e.getMessage());}
         catch (IOException e) {ErrorCatcher.call("Błąd odczytu parametrów połączenia do bazy");}
-        return 0;
+        return -1;
     }
 
     private int ordinalNumberFromDB(Statement stat) throws SQLException {

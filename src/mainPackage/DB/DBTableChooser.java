@@ -18,6 +18,7 @@ public class DBTableChooser extends JPanel
             instance = new DBTableChooser();
         return instance;
     }
+
     private JButton accept;
     private String name;
     private String field;
@@ -41,6 +42,7 @@ public class DBTableChooser extends JPanel
         add(options);
         add(buttonP, BorderLayout.SOUTH);
 
+        createDialog();
         readTablesFromDataBase();
     }
 
@@ -88,6 +90,16 @@ public class DBTableChooser extends JPanel
         return topText;
     }
 
+    private void createDialog()
+    {
+        dialog = new JDialog(Main.frame, true);
+        dialog.add(this);
+        dialog.setTitle("Określ tabelę");
+        dialog.pack();
+        dialog.getRootPane().setDefaultButton(accept);
+        dialog.setResizable(false);
+    }
+
     private void readTablesFromDataBase()
     {
         try(Statement stat = DBConnection.getInstance().getConnection().createStatement())
@@ -97,12 +109,8 @@ public class DBTableChooser extends JPanel
             {
                 tables.addItem(rs.getString(1));
             }
-        }
-        catch(SQLException ex) {
-            ErrorCatcher.call("Błąd SQL: "+ex.getMessage());
-        }catch(IOException e) {
-            ErrorCatcher.call("Błąd odczytu danych połączenia z bazą");
-        }
+        }catch(SQLException e) {ErrorCatcher.call("Błąd SQL: "+e.getMessage());
+        }catch(IOException e) { ErrorCatcher.call("Błąd odczytu danych połączenia z bazą");}
     }
 
     private void showFields()
@@ -116,13 +124,8 @@ public class DBTableChooser extends JPanel
                 cols.addItem(rs.getString(1));
 
             EventQueue.invokeLater(this::validate);
-        }
-        catch(SQLException ex)
-        {
-            ErrorCatcher.call("Błąd SQL: "+ex.getMessage());
-        }catch(IOException e) {
-            ErrorCatcher.call("Błąd odczytu danych połączenia z bazą");
-        }
+        }catch(SQLException e) {ErrorCatcher.call("Błąd SQL: "+e.getMessage());
+        }catch(IOException e) {ErrorCatcher.call("Błąd odczytu danych połączenia z bazą");}
 
         if(cols.getItemCount()>0)
            cols.setEnabled(true);
@@ -140,12 +143,6 @@ public class DBTableChooser extends JPanel
 
     public boolean showDialog()
     {
-        dialog = new JDialog(Main.frame, true);
-        dialog.add(this);
-        dialog.setTitle("Określ tabelę");
-        dialog.pack();
-        dialog.getRootPane().setDefaultButton(accept);
-        dialog.setResizable(false);
         dialog.setVisible(true);
         return approved;
     }
