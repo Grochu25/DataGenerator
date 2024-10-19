@@ -37,8 +37,9 @@ public class CustomsManager
     public static void deleteFromCustoms()
     {
         List<String> files = FileLoader.getSubfilesOfPath("./sources/customs").stream().map(File::getName).toList();
-        SelectionTableDialog<String> tableDialog = new SelectionTableDialog<>(Main.frame, files);
-        String fileToDeleteName = tableDialog.showDialogAndGetField("Wybierz polę do usunięcia", "Usuń polę");
+        SelectFromListDialog<String> tableDialog = new SelectFromListDialog<>(Main.frame, files);
+        int fileToDeleteIndex= tableDialog.showDialogAndGetFieldIndex("Wybierz polę do usunięcia", "Usuń polę");
+        String fileToDeleteName = files.get(fileToDeleteIndex);
         File fileToDelete = new File("./sources/customs/"+fileToDeleteName);
 
         if(fileToDelete.exists())

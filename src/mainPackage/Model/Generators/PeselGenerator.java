@@ -3,7 +3,7 @@ package mainPackage.Model.Generators;
 import mainPackage.Model.Generator;
 import mainPackage.Main;
 import mainPackage.Model.Generable;
-import mainPackage.View.SelectionTableDialog;
+import mainPackage.View.SelectFromListDialog;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -84,21 +84,23 @@ public class PeselGenerator implements Generable<String>
     public void setDependencies() {
         List<Generable<?>> generables = Generator.getInstance().getGenerablesList();
 
-        SelectionTableDialog<Generable<?>> tableDialog = new SelectionTableDialog<>(Main.frame, generables);
+        SelectFromListDialog<Generable<?>> tableDialog = new SelectFromListDialog<>(Main.frame, generables);
 
-        Generable<?> choosed = tableDialog.showDialogAndGetField("Wybierz pole Imię lub płeć do połączenia",
+        int choosed = tableDialog.showDialogAndGetFieldIndex("Wybierz pole Imię lub płeć do połączenia",
                         "Wybierz pole Imię lub płeć do połączenia lub zamknij to okienko dla losowych danych");
+        Generable<?> found = (choosed < 0) ? null : generables.get(choosed);
 
-        if(choosed instanceof NameGenerator)
-            this.genderGenerator = new GenderGenerator((NameGenerator) choosed);
-        else if(choosed instanceof GenderGenerator)
-            this.genderGenerator = (GenderGenerator) choosed;
+        if(found instanceof NameGenerator)
+            this.genderGenerator = new GenderGenerator((NameGenerator) found);
+        else if(found instanceof GenderGenerator)
+            this.genderGenerator = (GenderGenerator) found;
         else
             this.genderGenerator = null;
 
-        choosed = tableDialog.showDialogAndGetField("Wybierz pole Datę urodzenia do połączenia",
+        choosed = tableDialog.showDialogAndGetFieldIndex("Wybierz pole Datę urodzenia do połączenia",
                         "Wybierz pole Datę urodzenia do połączenia lub zamknij to okienko dla losowych danych");
-        this.dateGenerator = (choosed instanceof DateGenerator) ? (DateGenerator)choosed : null;
+        found = (choosed < 0) ? null : generables.get(choosed);
+        this.dateGenerator = (found instanceof DateGenerator) ? (DateGenerator)found : null;
     }
 
     @Override

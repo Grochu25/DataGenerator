@@ -1,23 +1,24 @@
 package mainPackage.View;
 
 import mainPackage.Main;
+import mainPackage.Model.Generable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class SelectionTableDialog<T> extends JPanel
+public class SelectFromListDialog<T> extends JPanel
 {
     private JTextArea infoTextArea;
     private JDialog dialog;
     private JTable fieldTable;
     private List<T> elements;
 
-    public SelectionTableDialog(Component owner, List<T> elements)
+    public SelectFromListDialog(Component owner, List<T> elements)
     {
         this.elements = elements;
         dialog = new JDialog(Main.frame,true);
-        fieldTable = createTableWithFields(elements);
+        fieldTable = createTableWithFields();
         infoTextArea = createInfoTextArea();
 
         JButton apply = new JButton("Zatwierdź");
@@ -30,14 +31,14 @@ public class SelectionTableDialog<T> extends JPanel
         dialog.getRootPane().setDefaultButton(apply);
     }
 
-    private JTable createTableWithFields(List<T> fields)
+    private JTable createTableWithFields()
     {
         String[] columnHeaders = {"LP.","Pole"};
-        String[][] data = new String[fields.size()][2];
+        String[][] data = new String[elements.size()][2];
 
-        for(int i=0;i<fields.size();i++) {
+        for(int i=0;i<elements.size();i++) {
             data[i][0] = ""+(i+1);
-            data[i][1] = fields.get(i).toString();
+            data[i][1] = elements.get(i).toString();
         }
 
         return new JTable(data,columnHeaders);
@@ -53,15 +54,13 @@ public class SelectionTableDialog<T> extends JPanel
         return textArea;
     }
 
-    public T showDialogAndGetField(String content, String title)
+    public int showDialogAndGetFieldIndex(String content, String title)
     {
         fieldTable.clearSelection();
         dialog.setTitle(title);
         infoTextArea.setText(content);
         dialog.setVisible(true);
 
-        if(fieldTable.getSelectedRow() >= 0)
-            return elements.get(fieldTable.getSelectedRow());
-        return null;
+        return fieldTable.getSelectedRow();
     }
 }

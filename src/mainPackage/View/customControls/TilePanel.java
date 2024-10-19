@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class TilePanel extends JPanel implements ActionListener
 {
-    //TODO w sumie to nie jest potrzebne, ale jest przydatne przy przeszukiwaniu zbioru kafelek
     private ArrayList<InfoTile> tiles = new ArrayList<>();
 
     public TilePanel()

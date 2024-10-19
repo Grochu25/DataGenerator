@@ -3,7 +3,7 @@ package mainPackage.Model.Generators;
 import mainPackage.Model.Generator;
 import mainPackage.Main;
 import mainPackage.Model.Generable;
-import mainPackage.View.SelectionTableDialog;
+import mainPackage.View.SelectFromListDialog;
 
 import java.util.List;
 
@@ -54,12 +54,12 @@ public class GenderGenerator implements Generable<String>
     @Override
     public void setDependencies() {
         List<Generable<?>> generables = Generator.getInstance().getGenerablesList();
-        SelectionTableDialog<Generable<?>> tableDialog = new SelectionTableDialog<>(Main.frame, generables);
+        SelectFromListDialog<Generable<?>> tableDialog = new SelectFromListDialog<>(Main.frame, generables);
 
-        Generable<?> choosed = tableDialog.showDialogAndGetField("Wybierz pole Imię do połączenia",
+        int choosed = tableDialog.showDialogAndGetFieldIndex("Wybierz pole Imię do połączenia",
                         "Wybierz pole Imię do połączenia lub zamknij to okienko dla losowych danych");
-
-        this.nameGenerator = (choosed instanceof NameGenerator) ? (NameGenerator) choosed : null;
+        Generable<?> found = (choosed < 0) ? null : generables.get(choosed);
+        this.nameGenerator = (found instanceof NameGenerator) ? (NameGenerator) found : null;
     }
 
     @Override

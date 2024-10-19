@@ -3,7 +3,7 @@ package mainPackage.View.MainElements;
 import mainPackage.Model.Generator;
 import mainPackage.Main;
 import mainPackage.Model.Generable;
-import mainPackage.View.SelectionTableDialog;
+import mainPackage.View.SelectFromListDialog;
 import mainPackage.View.customControls.TilePanel;
 
 import javax.swing.*;
@@ -38,9 +38,9 @@ public class ChoosedInfoPanel extends JPanel implements ActionListener
 
     private void removeAction()
     {
-        SelectionTableDialog<Generable<?>> chooser = new SelectionTableDialog<>(Main.frame, Generator.getInstance().getGenerablesList());
-        Generable<?> deletedItem = chooser.showDialogAndGetField("Wybierz pole, które chcesz usunąć", "Usuń pole");
-        Generator.getInstance().removeFromGenerables(deletedItem);
+        SelectFromListDialog<Generable<?>> chooser = new SelectFromListDialog<>(Main.frame, Generator.getInstance().getGenerablesList());
+        int deletedItemIndex = chooser.showDialogAndGetFieldIndex("Wybierz pole, które chcesz usunąć", "Usuń pole");
+        Generable<?> deletedItem = Generator.getInstance().removeFromGenerables(deletedItemIndex);
         tilePanel.deleteTileByGenerable(deletedItem);
         validate();
         repaint();

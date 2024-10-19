@@ -29,7 +29,11 @@ public class DateGenerator implements Generable<String>
 
     @Override
     public String generate() {
-        lastGenerated = fromDate.plusDays(Generator.getInstance().getRandom().nextLong(ChronoUnit.DAYS.between(fromDate, toDate)));
+        long daysBetweenDates = ChronoUnit.DAYS.between(fromDate, toDate);
+        if(daysBetweenDates <= 0)
+            lastGenerated = fromDate;
+        else
+            lastGenerated = fromDate.plusDays(Generator.getInstance().getRandom().nextLong(daysBetweenDates));
         return lastGenerated.format(Generator.getInstance().getDateTimeFormatter());
     }
 

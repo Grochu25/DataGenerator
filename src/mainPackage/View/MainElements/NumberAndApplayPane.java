@@ -28,7 +28,7 @@ public class NumberAndApplayPane extends JPanel implements ActionListener
     {
         numberSpinner = new JSpinner(new SpinnerNumberModel(1,1,100000,1));
         generateButton = new JButton("Generuj");
-        dataSeparatorComboBox = new JComboBox<>(new Character[]{',', ';'});
+        dataSeparatorComboBox = new JComboBox<>(new Character[]{',', ';',':'});
         bracketsCheckbox = new JCheckBox("nawiasy brzeżne");
         quotationMarksCheckbox = new JCheckBox("cudzysłowia wokół tekstu");
 

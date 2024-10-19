@@ -19,9 +19,9 @@ public class DateTab extends JPanel
         dateTo.setEditor(new JSpinner.DateEditor(dateTo, "dd.MM.yyyy"));
 
         Font font = dateFrom.getEditor().getFont();
-        Font n = new Font(font.getName(), font.getStyle(), (int) (font.getSize()*1.5));
-        dateFrom.getEditor().getComponent(0).setFont(n);
-        dateTo.getEditor().getComponent(0).setFont(n);
+        Font newFont = new Font(font.getName(), font.getStyle(), (int) (font.getSize()*1.5));
+        dateFrom.getEditor().getComponent(0).setFont(newFont);
+        dateTo.getEditor().getComponent(0).setFont(newFont);
 
         JButton addDateButton = new JButton("Dodaj datę");
         addDateButton.addActionListener(
@@ -32,7 +32,14 @@ public class DateTab extends JPanel
                             new DateGenerator(from, to));
                 });
 
+        JLabel fromLabel = new JLabel("Data od:");
+        JLabel toLabel = new JLabel("Data do:");
+        fromLabel.setFont(newFont);
+        toLabel.setFont(newFont);
+
+        add(fromLabel);
         add(dateFrom);
+        add(toLabel);
         add(dateTo);
         add(addDateButton);
     }

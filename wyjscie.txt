@@ -1,1 +1,1 @@
-(1,"Władysław","Szymański");
+("Fikus");

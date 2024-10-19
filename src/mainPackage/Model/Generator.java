@@ -61,7 +61,7 @@ public class Generator
             sBuilder.append((brackets)?"(":"");
 
             for(GenerationOrderPair pair : generableQueue)
-                line[pair.order] = generateSingle(pair.generable);
+                line[pair.order] = generateSingle(pair.generable) + ((pair.order != generables.size()-1)?separator:"");
 
             for(String piece : line)
                 sBuilder.append(piece);
@@ -89,29 +89,6 @@ public class Generator
         return number;
     }
 
-    private ArrayDeque<GenerationOrderPair> orderGenerables()
-    {
-        ArrayDeque<GenerationOrderPair> deque = new ArrayDeque<>();
-        for(int i=0; i<generables.size(); i++){
-            if(generables.get(i) instanceof EmailGenerator || generables.get(i) instanceof PeselGenerator || generables.get(i) instanceof GenderGenerator)
-                deque.addLast(new GenerationOrderPair(i, generables.get(i)));
-            else
-                deque.addFirst(new GenerationOrderPair(i, generables.get(i)));
-        }
-
-        return deque;
-    }
-
-    private void generateToDataBase(String data)
-    {
-        try(Statement stat  = DBConnection.getInstance().getConnection().createStatement())
-        {
-            stat.executeUpdate("INSERT INTO "+ DBTableChooser.getInstance().getBaseName()+" VALUES "+data);
-        }
-        catch (SQLException e) {ErrorCatcher.call("Błąd SQL: "+e.getMessage());}
-        catch (IOException e) {ErrorCatcher.call("Błąd odczytu parametrów połączenia do bazy");}
-    }
-
     private int prepareDatabase(){
         try(Statement stat  = DBConnection.getInstance().getConnection().createStatement())
         {
@@ -134,12 +111,17 @@ public class Generator
         return rs.getInt(1);
     }
 
-    private void generateToFile(String data)
+    private ArrayDeque<GenerationOrderPair> orderGenerables()
     {
-        try(FileWriter file = FileLoader.openToSave()){
-            if(file != null)
-                file.write(data);
-        } catch (IOException e) {ErrorCatcher.call("Zapisywanie danych nie powiodło się");}
+        ArrayDeque<GenerationOrderPair> deque = new ArrayDeque<>();
+        for(int i=0; i<generables.size(); i++){
+            if(generables.get(i) instanceof EmailGenerator || generables.get(i) instanceof PeselGenerator || generables.get(i) instanceof GenderGenerator)
+                deque.addLast(new GenerationOrderPair(i, generables.get(i)));
+            else
+                deque.addFirst(new GenerationOrderPair(i, generables.get(i)));
+        }
+
+        return deque;
     }
 
     private String generateSingle(Generable<?> generable)
@@ -152,10 +134,25 @@ public class Generator
         else
             singleGenerated += generationResult.toString();
 
-        if(generable != generables.get(generables.size()-1))
-            singleGenerated += separator;
-
         return  singleGenerated;
+    }
+
+    private void generateToDataBase(String data)
+    {
+        try(Statement stat  = DBConnection.getInstance().getConnection().createStatement())
+        {
+            stat.executeUpdate("INSERT INTO "+ DBTableChooser.getInstance().getBaseName()+" VALUES "+data);
+        }
+        catch (SQLException e) {ErrorCatcher.call("Błąd SQL: "+e.getMessage());}
+        catch (IOException e) {ErrorCatcher.call("Błąd odczytu parametrów połączenia do bazy");}
+    }
+
+    private void generateToFile(String data)
+    {
+        try(FileWriter file = FileLoader.openToSave()){
+            if(file != null)
+                file.write(data);
+        } catch (IOException e) {ErrorCatcher.call("Zapisywanie danych nie powiodło się");}
     }
 
     public void addToGenerables(Generable<?> generable)
@@ -164,9 +161,9 @@ public class Generator
         listener.actionPerformed(new ActionEvent(generable,0 , generable.getGeneratorLabel()));
     }
 
-    public void removeFromGenerables(Generable<?> generable)
+    public Generable<?> removeFromGenerables(int removedIndex)
     {
-        generables.remove(generable);
+        return generables.remove(removedIndex);
     }
 
     public void addActionListener(ActionListener actionListener)
